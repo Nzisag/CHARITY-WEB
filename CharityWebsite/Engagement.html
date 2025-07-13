@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Get Involved - Usalama Foundation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Usalama Foundation</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="Engagement.html">Engagement</a>
+      <a href="Contact.html">Contact</a>
+    </nav>
+  </header>
+ <img src="images/unity.jpg" alt="unity" width="800" height="350" class="center-img">
+  <section>
+    <h2>Make a Donation</h2>
+    A little love goes a long way,help us make the world a better place  by donating to the charity that aligns with your values . Please fill in your donation details below.</p>
+    
+    <form id="donation-form" onsubmit="submitDonation(event)">
+      <label for="donor-name">Full Name:</label><br>
+      <input type="text" id="donor-name" name="donor-name" required><br><br>
+
+      <label for="donor-email">Email:</label><br>
+      <input type="email" id="donor-email" name="donor-email" required><br><br>
+
+      <label for="donation-amount">Amount (KES):</label><br>
+      <input type="number" id="donation-amount" name="donation-amount" required><br><br>
+
+      <button type="submit">Donate Now</button>
+    </form>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Become a Volunteer</h2>
+    <p>Want to make a difference? Join our team of volunteers in helping out and brightening the lives of others through your skills and presence and help us serve communities in need.</p>
+    
+    <form>
+      <label for="volunteer-name">Full Name:</label><br>
+      <input type="text" id="volunteer-name" name="volunteer-name" required><br><br>
+
+      <label for="volunteer-email">Email:</label><br>
+      <input type="email" id="volunteer-email" name="volunteer-email" required><br><br>
+
+      <label for="volunteer-interest">Area of Interest:</label><br>
+      <select id="volunteer-interest" name="volunteer-interest">
+        <option value="education">Education Support</option>
+        <option value="food">Food Distribution</option>
+        <option value="health">Health Services</option>
+        <option value="youth">Youth Mentorship</option>
+      </select><br><br>
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Post a Charity Opportunity</h2>
+    <p>Do you have a project that aims to make the world a better place through charity work? If so, post your Donation or Charity event below.</p>
+    
+    <form>
+      <label for="org-name">Organization Name:</label><br>
+      <input type="text" id="org-name" name="org-name" required><br><br>
+
+      <label for="opp-title">Opportunity Title:</label><br>
+      <input type="text" id="opp-title" name="opp-title" required><br><br>
+
+      <label for="opp-location">Location:</label><br>
+      <input type="text" id="opp-location" name="opp-location" required><br><br>
+
+      <label for="opp-description">Description:</label><br>
+      <textarea id="opp-description" name="opp-description" rows="5" required></textarea><br><br>
+
+      <button type="submit">Post Opportunity</button>
+    </form>
+  </section>
+
+  <footer>
+    <p> WELCOME:) </p>
+  </footer>
+
+  <script>
+  function submitDonation(event) {
+    console.log('submitDonation function called');
+    event.preventDefault(); // Prevent the default form submit behavior (page reload)
+
+    // Get form values
+    const name = document.getElementById('donor-name').value;
+    const email = document.getElementById('donor-email').value;
+    const amount = document.getElementById('donation-amount').value;
+
+    // Prepare data object
+    const data = { name, email, amount };
+
+    // Send data to backend
+    fetch('http://localhost:5000/api/donation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(result => {
+        alert(result.message); // Show confirmation message from backend
+        document.getElementById('donation-form').reset(); // Clear form
+      })
+      .catch(() => {
+        alert('Oops! Something went wrong with your donation. Please try again.');
+      });
+  }
+</script>
+
+</body>
+</html>
